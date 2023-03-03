@@ -1,12 +1,7 @@
 from django.urls import reverse_lazy
 from django.views import generic
-from django.shortcuts import render
 
-from my_todo_list.models import Tag
-
-
-def index(request):
-    return render(request, "my_todo_list/task.html")
+from my_todo_list.models import Tag, Task
 
 
 class TagListView(generic.ListView):
@@ -28,5 +23,28 @@ class TagCreateView(generic.CreateView):
 
 
 class TagDeleteView(generic.DeleteView):
-    model = Tag
+    model = Task
     template_name = "my_todo_list/tag_delete_form.html"
+
+
+class TaskListView(generic.ListView):
+    model = Task
+    queryset = Task.objects.all()
+    template_name = "my_todo_list/task.html"
+
+
+class TaskUpdateView(generic.UpdateView):
+    model = Task
+    template_name = "my_todo_list/tag_update_create_form.html"
+    success_url = reverse_lazy("my_todo_list:task-list")
+
+
+class TaskCreateView(generic.CreateView):
+    model = Task
+    template_name = "my_todo_list/tag_update_create_form.html"
+    success_url = reverse_lazy("my_todo_list:task-list")
+
+
+class TaskDeleteView(generic.DeleteView):
+    model = Task
+    template_name = "my_todo_list/task_delete_form.html"
