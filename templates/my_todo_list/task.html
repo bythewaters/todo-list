@@ -16,8 +16,9 @@
               <table class="table mb-4">
                 <thead>
                   <tr>
-                    <th scope="col">No.</th>
                     <th scope="col">Todo item</th>
+                    <th scope="col">Deadline</th>
+                    <th scope="col">Date added</th>
                     <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                   </tr>
@@ -25,28 +26,45 @@
                 <tbody>
                 {% for task in task_list %}
                   <tr>
-                    <th scope="row">{{ task.id }}</th>
                     <td>
-                      {{ task.content }}
-                      <p style="color: red">
+                      <p style="inline-size: 300px">{{ task.content }}</p>
+                      <p style="color: royalblue">
                         Tag:
                         {% for tag in task.tags.all %}
                           {{ tag.name }}
                         {% endfor %}
+                        <a href="{% url 'my_todo_list:task-update-tag' pk=task.id %}">🔄</a>
                       </p>
-
                     </td>
+                    <th>{{ task.deadline }}</th>
+                    <th>{{ task.date_time }}</th>
                     {% if task.mark is False%}
-                      <td>Not Done</td>
+                      <td style="color: red">Not Done</td>
                       {% else %}
-                        <td>Done</td>
+                        <td style="color: green">Done</td>
                     {% endif %}
                     <td>
-                      <form action="{% url 'my_todo_list:task-delete' pk=task.id %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="Delete" class="btn btn-danger">
-                      </form>
-                      <button type="submit" class="btn btn-success ms-1">Finished</button>
+                      <div class="row">
+                        <div class="col-md-5">
+                          <form action="{% url 'my_todo_list:task-delete' pk=task.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                          </form>
+                        </div>
+                        <div class="col-md-5">
+                          {% if task.mark is False %}
+                            <form action="{% url 'my_todo_list:task-update-mark' pk=task.id %}" method="post">
+                              {% csrf_token %}
+                              <input type="submit" value="Done" class="btn btn-success">
+                            </form>
+                          {% else %}
+                            <form action="{% url 'my_todo_list:task-update-mark' pk=task.id %}" method="post">
+                              {% csrf_token %}
+                              <input type="submit" value="Undo" class="btn btn-secondary">
+                            </form>
+                          {% endif %}
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 {% endfor %}
