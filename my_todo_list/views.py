@@ -12,19 +12,22 @@ class TagListView(generic.ListView):
 
 class TagUpdateView(generic.UpdateView):
     model = Tag
+    fields = ("name",)
     template_name = "my_todo_list/tag_update_create_form.html"
     success_url = reverse_lazy("my_todo_list:tag-list")
 
 
 class TagCreateView(generic.CreateView):
     model = Tag
-    template_name = "my_todo_list/tag_update_create_form.html"
+    fields = ("name",)
+    template_name = "my_todo_list/tag.html"
     success_url = reverse_lazy("my_todo_list:tag-list")
 
 
 class TagDeleteView(generic.DeleteView):
-    model = Task
+    model = Tag
     template_name = "my_todo_list/tag_delete_form.html"
+    success_url = reverse_lazy("my_todo_list:tag-list")
 
 
 class TaskListView(generic.ListView):
