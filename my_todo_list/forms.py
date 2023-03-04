@@ -17,3 +17,14 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ("content", "deadline", "tags")
+
+
+class UpdateTaskTagForm(forms.ModelForm):
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+    class Meta:
+        model = Task
+        fields = ("tags",)
