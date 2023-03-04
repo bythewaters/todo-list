@@ -21,9 +21,10 @@
           </a>
         </td>
         <td>
-          <a href="{% url 'my_todo_list:tag-delete' pk=tag.id %}" class="btn btn-danger">
-            Delete
-          </a>
+          <form action="{% url 'my_todo_list:tag-delete' pk=tag.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Delete" class="btn btn-danger">
+          </form>
         </td>
       </tr>
     {% endfor %}
