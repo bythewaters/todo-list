@@ -1,7 +1,8 @@
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from my_todo_list.forms import TaskForm
+from my_todo_list.forms import TaskForm, UpdateTaskTagForm
 from my_todo_list.models import Tag, Task
 
 
@@ -43,6 +44,18 @@ class TaskUpdateView(generic.UpdateView):
     success_url = reverse_lazy("my_todo_list:task-list")
 
 
+def update_mark(request, pk):
+    tasks = Task.objects.all().filter(id=pk)
+    for task in tasks:
+        if task.mark is False:
+            task.mark = True
+            task.save()
+        else:
+            task.mark = False
+            task.save()
+    return redirect("my_todo_list:task-list")
+
+
 class TaskCreateView(generic.CreateView):
     model = Task
     form_class = TaskForm
@@ -53,4 +66,11 @@ class TaskCreateView(generic.CreateView):
 class TaskDeleteView(generic.DeleteView):
     model = Task
     template_name = "my_todo_list/task.html"
+    success_url = reverse_lazy("my_todo_list:task-list")
+
+
+class UpdateTagView(generic.UpdateView):
+    model = Task
+    form_class = UpdateTaskTagForm
+    template_name = "my_todo_list/update_task_tag.html"
     success_url = reverse_lazy("my_todo_list:task-list")
