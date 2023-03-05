@@ -44,15 +44,11 @@ class TaskUpdateView(generic.UpdateView):
     success_url = reverse_lazy("my_todo_list:task-list")
 
 
-def update_mark(request, pk):
+def update_mark(request, pk) -> str:
     tasks = Task.objects.all().filter(id=pk)
     for task in tasks:
-        if task.mark is False:
-            task.mark = True
-            task.save()
-        else:
-            task.mark = False
-            task.save()
+        task.mark = not task.mark
+        task.save()
     return redirect("my_todo_list:task-list")
 
 
