@@ -12,11 +12,19 @@ class TaskForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
         widget=forms.CheckboxSelectMultiple,
+        required=False
     )
+
+    def clean(self) -> dict:
+        cleaned_data = super().clean()
+        tags = cleaned_data.get("tags")
+        if not tags:
+            cleaned_data["tags"] = None
+        return cleaned_data
 
     class Meta:
         model = Task
-        fields = ("content", "deadline", "tags")
+        fields = ("content", "deadline")
 
 
 class UpdateTaskTagForm(forms.ModelForm):

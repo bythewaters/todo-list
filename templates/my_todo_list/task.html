@@ -28,13 +28,15 @@
                   <tr>
                     <td>
                       <p style="inline-size: 300px">{{ task.content }}</p>
-                      <p style="color: royalblue">
-                        Tag:
-                        {% for tag in task.tags.all %}
-                          {{ tag.name }}
-                        {% endfor %}
-                        <a href="{% url 'my_todo_list:task-update-tag' pk=task.id %}">🔄</a>
-                      </p>
+                      {% if task.tags.all %}
+                        <p style="color: royalblue">
+                          Tag:
+                          {% for tag in task.tags.all %}
+                            {{ tag.name }}
+                          {% endfor %}
+                          <a href="{% url 'my_todo_list:task-update-tag' pk=task.id %}">🔄</a>
+                        </p>
+                      {% endif %}
                     </td>
                     <th>{{ task.deadline }}</th>
                     <th>{{ task.date_time }}</th>
