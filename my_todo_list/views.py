@@ -1,6 +1,6 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views import generic
+from django.views import generic, View
 
 from my_todo_list.forms import TaskForm, UpdateTaskTagForm
 from my_todo_list.models import Tag, Task
@@ -44,12 +44,13 @@ class TaskUpdateView(generic.UpdateView):
     success_url = reverse_lazy("my_todo_list:task-list")
 
 
-def update_mark(request, pk) -> str:
-    tasks = Task.objects.all().filter(id=pk)
-    for task in tasks:
+class UpdateMarkView(View):
+    @staticmethod
+    def post(request, pk):
+        task = get_object_or_404(Task, id=pk)
         task.mark = not task.mark
         task.save()
-    return redirect("my_todo_list:task-list")
+        return redirect("my_todo_list:task-list")
 
 
 class TaskCreateView(generic.CreateView):
