@@ -4,7 +4,7 @@ from django.forms import SelectDateWidget
 from my_todo_list.models import Task, Tag
 
 
-class TaskForm(forms.ModelForm):
+class TaskCreateForm(forms.ModelForm):
     deadline = forms.DateField(
         widget=SelectDateWidget(
             attrs=(
@@ -42,3 +42,18 @@ class UpdateTaskTagForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ("tags",)
+
+
+class TaskUpdateForm(forms.ModelForm):
+    deadline = forms.DateField(
+        widget=SelectDateWidget(
+            attrs=(
+                {"class": "deadline"}
+            )
+        ),
+        required=False,
+    )
+
+    class Meta:
+        model = Task
+        fields = ("content", "deadline")

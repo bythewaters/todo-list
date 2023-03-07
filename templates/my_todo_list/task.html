@@ -27,7 +27,7 @@
                 {% for task in task_list %}
                   <tr>
                     <td>
-                      <p style="inline-size: 300px">{{ task.content }}</p>
+                      <p style="inline-size: 300px">{{ task.content }} <a href="{% url 'my_todo_list:task-update' pk=task.id %}">🔄</a></p>
                       {% if task.tags.all %}
                         <p style="color: royalblue">
                           Tag:
