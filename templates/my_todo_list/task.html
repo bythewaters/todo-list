@@ -38,7 +38,11 @@
                         </p>
                       {% endif %}
                     </td>
-                    <th>{{ task.deadline }}</th>
+                    {% if task.deadline %}
+                      <th>{{ task.deadline }}</th>
+                      {% else %}
+                      <th>In this task you don't have deadline:)</th>
+                    {% endif %}
                     <th>{{ task.date_time }}</th>
                     {% if task.mark is False%}
                       <td style="color: red">Not Done</td>
