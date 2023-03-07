@@ -7,6 +7,7 @@ from my_todo_list.models import Task, Tag
 class TaskForm(forms.ModelForm):
     deadline = forms.DateField(
         widget=SelectDateWidget(),
+        required=False
     )
 
     tags = forms.ModelMultipleChoiceField(
@@ -31,6 +32,7 @@ class UpdateTaskTagForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
         widget=forms.CheckboxSelectMultiple,
+        required=False
     )
 
     class Meta:

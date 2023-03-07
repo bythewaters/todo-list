@@ -3,7 +3,7 @@ from django.test import TestCase
 from my_todo_list.models import Tag
 
 
-class TagTest(TestCase):
+class TagModelTest(TestCase):
     def setUp(self) -> None:
         self.tag = Tag.objects.create(name="test")
 
