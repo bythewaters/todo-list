@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <form action="{% url 'my_todo_list:tag-create' %}" method="post" class="form-inline">
+  <form action="{% url 'my_todo_list:tag-create' %}" method="post" class="form-row" >
     {% csrf_token %}
     <input name="name" style="margin-top: 50px" type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
       placeholder="Add new...">
-    <button style="margin-top: 50px" class="btn btn-success">
+    <button style="margin-top: 10px" class="btn btn-success">
       Submit
     </button>
   </form>
