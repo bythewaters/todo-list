@@ -6,8 +6,12 @@ from my_todo_list.models import Task, Tag
 
 class TaskForm(forms.ModelForm):
     deadline = forms.DateField(
-        widget=SelectDateWidget(),
-        required=False
+        widget=SelectDateWidget(
+            attrs=(
+                {"class": "deadline"}
+            )
+        ),
+        required=False,
     )
 
     tags = forms.ModelMultipleChoiceField(

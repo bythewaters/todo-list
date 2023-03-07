@@ -8,3 +8,10 @@
 #list1 .select-input.form-control[readonly]:not([disabled]) {
   background-color: #fbfbfb;
 }
+
+.deadline {
+  width: 10%;
+  display: inline-block;
+  margin: 10px;
+
+}
