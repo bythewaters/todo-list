@@ -4,7 +4,7 @@
   <form action="" method="post">
     {% csrf_token %}
     <input name="name" style="margin-top: 50px" type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
-      placeholder="Change name..">
+      placeholder="{{ tag.name }}">
     <button style="margin-top: 50px" class="btn btn-success">
       Submit
     </button>
