@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <form action="{% url 'my_todo_list:tag-create' %}" method="post" class="form-row" >
+    {% csrf_token %}
+    <input name="name" style="margin-top: 50px" type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
+      placeholder="Add new...">
+    <button style="margin-top: 10px" class="btn btn-success">
+      Submit
+    </button>
+  </form>
+  <table class="table" style="margin-top: 50px">
+    {% for tag in tag_list %}
+      <tr>
+        <td>
+            {{ tag.name }}
+        </td>
+        <td>
+          <a href="{% url 'my_todo_list:tag-update' pk=tag.id %}" class="btn btn-primary">
+            Update
+          </a>
+        </td>
+        <td>
+          <form action="{% url 'my_todo_list:tag-delete' pk=tag.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Delete" class="btn btn-danger">
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
