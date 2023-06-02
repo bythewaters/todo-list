@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-9 col-xl-12">
+          <div class="card rounded-3">
+            <div class="card-body p-6">
+
+              <h4 class="text-center my-3 pb-3">Todo List</h4>
+
+                <div class="col-12" style="text-align: right; margin-bottom: 10px">
+                  <a href="{% url 'todo_list:task-create' %}" class="btn btn-primary">Add new task</a>
+                </div>
+              <table class="table mb-4">
+                <thead>
+                  <tr>
+                    <th scope="col">Todo item</th>
+                    <th scope="col">Deadline</th>
+                    <th scope="col">Date added</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for task in task_list %}
+                  <tr>
+                    <td>
+                      <p style="inline-size: 300px">{{ task.content }} <a href="{% url 'my_todo_list:task-update' pk=task.id %}">🔄</a></p>
+                      {% if task.tags.all %}
+                        <p style="color: royalblue">
+                          Tag:
+                          {% for tag in task.tags.all %}
+                            {{ tag.name }}
+                          {% endfor %}
+                          <a href="{% url 'my_todo_list:task-update-tag' pk=task.id %}">🔄</a>
+                        </p>
+                      {% endif %}
+                    </td>
+                    {% if task.deadline %}
+                      <th>{{ task.deadline }}</th>
+                      {% else %}
+                      <th>In this task you don't have deadline:)</th>
+                    {% endif %}
+                    <th>{{ task.date_time }}</th>
+                    {% if task.mark is False%}
+                      <td style="color: red">Not Done</td>
+                      {% else %}
+                        <td style="color: green">Done</td>
+                    {% endif %}
+                    <td>
+                      <div class="row">
+                        <div class="col-md-5">
+                          <form action="{% url 'my_todo_list:task-delete' pk=task.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                          </form>
+                        </div>
+                        <div class="col-md-5">
+                          {% if task.mark is False %}
+                            <form action="{% url 'my_todo_list:task-update-mark' pk=task.id %}" method="post">
+                              {% csrf_token %}
+                              <input type="submit" value="Done" class="btn btn-success">
+                            </form>
+                          {% else %}
+                            <form action="{% url 'my_todo_list:task-update-mark' pk=task.id %}" method="post">
+                              {% csrf_token %}
+                              <input type="submit" value="Undo" class="btn btn-secondary">
+                            </form>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
